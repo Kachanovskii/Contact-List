@@ -293,3 +293,7 @@ input {
 .contacts-list .lab-primary {
     background: #7266ba;
 }
+
+.list-empty{
+    padding-left: 20px;
+}

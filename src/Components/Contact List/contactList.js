@@ -77,7 +77,7 @@ const ContactList = ({List}) => {
                       </div>
                     </div>
                   </div>
-                  {item}
+                  {item.length !==0 ? item : <p className='list-empty'>Contact list is empty.</p>}
                   </form>
                   </div>
                 </div>

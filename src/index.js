@@ -1,53 +1,55 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import {v4 as uuidv4} from 'uuid'
 import './index.css'
 import ContactList from './Components/Contact List/contactList'
+
 
 class App extends React.Component {
   state = {
     List: [
-      {id:1,
-      name:  'Alexander Verdnam',
-      lables: 'Friends',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar1.png'
-      },
-      {id:2,
-      name:  'Gerard Butler',
-      lables: 'Work',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar2.png'
-      },
-      {id:3,
-      name:  'Anna Lee',
-      lables: 'Private',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar3.png'
-      },
-      {id:4,
-      name:  ' Alexander Verdnam',
-      lables: '',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar4.png'
-      },
-      {id:5,
-      name:  'Olga Verdnam',
-      lables: 'Family',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar5.png'
-      },
-      {id:6,
-      name:  'John Verdnam',
-      lables: '',
-      phone: '+1-800-600-9898',
-      email: 'example@gmail.com',
-      avatar: 'https://bootdey.com/img/Content/avatar/avatar6.png'
-      },
+      {id:uuidv4(),
+        name:  'Alexander Verdnam',
+        lables: 'Friends',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '1'
+        },
+        {id:uuidv4(),
+        name:  'Gerard Butler',
+        lables: 'Work',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '2'
+        },
+        {id:uuidv4(),
+        name:  'Anna Lee',
+        lables: 'Private',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '3'
+        },
+        {id:uuidv4(),
+        name:  ' Alexander Verdnam',
+        lables: '',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '4'
+        },
+        {id:uuidv4(),
+        name:  'Olga Verdnam',
+        lables: 'Family',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '5'
+        },
+        {id:uuidv4(),
+        name:  'John Verdnam',
+        lables: '',
+        phone: '+1-800-600-9898',
+        email: 'example@gmail.com',
+        avatar: '6'
+        },
     ]
   }
   render() {

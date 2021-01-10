@@ -10,6 +10,24 @@ class ContactItem extends React.Component {
     }
     render() {
         const {name, lables, phone, email, avatar} = this.state;
+        
+        const imageURL = `https://bootdey.com/img/Content/avatar/avatar${avatar}.png`
+
+        let styleLables = 'lab'
+        if(lables === 'Work') {
+          styleLables = 'lab lab-success'
+        } else if(lables === 'Family') {
+          styleLables = 'lab lab-primary'
+        } else if(lables === 'Private') {
+          styleLables = 'lab lab-danger'
+        } else if(lables === 'Friends') {
+          styleLables = 'lab lab-warning'
+        }
+
+        function changeLable (event) {
+          console.log(event)
+        }
+
         return(
             <Fragment>
               <div className="unit">
@@ -21,9 +39,9 @@ class ContactItem extends React.Component {
                       
                   </div>
                   <div>
-                    <img src={avatar} alt="image" className="avatar"/>{name}
+                    <img src={imageURL} alt="image" className="avatar"/>{name}
                   </div>
-                  <div className="lab lab-warning">{lables}</div>
+                  <div className={styleLables} onClick={changeLable}>{lables}</div>
                 </div>
                 <div className="field phone">
                   {phone}
