@@ -1,15 +1,39 @@
+import { render } from '@testing-library/react';
 import React, { Fragment } from 'react'
 
+
+
 class ContactItem extends React.Component {
-    state = {
-        name: this.props.name,
-        lables: this.props.lables,
-        phone: this.props.phone,
-        email: this.props.email,
-        avatar: this.props.avatar
+    constructor(props) {
+        super(props)
+        this.state= {
+          name: this.props.name,
+          lables: this.props.lables,
+          phone: this.props.phone,
+          email: this.props.email,
+          avatar: this.props.avatar,
+          allLables: ['Work', 'Family', 'Private', 'Friends'] 
+        }
+        this.changeLable = this.changeLable.bind(this)
+    }
+    changeLable (event) {
+      for(let e in this.state.allLables){
+        if(this.state.allLables[e]===event.target.outerText){
+          let num = Number(e)
+          if(num==3){
+            num=-1
+          }
+          num=num+1
+          this.setState({
+            lables: this.state.allLables[num]
+          })
+          
+        }
+      }
     }
     render() {
-        const {name, lables, phone, email, avatar} = this.state;
+
+        const {name, lables, phone, email, avatar, allLables} = this.state;
         
         const imageURL = `https://bootdey.com/img/Content/avatar/avatar${avatar}.png`
 
@@ -24,12 +48,10 @@ class ContactItem extends React.Component {
           styleLables = 'lab lab-warning'
         }
 
-        function changeLable (event) {
-          console.log(event)
-        }
+       
 
         return(
-            <Fragment>
+            <Fragment >
               <div className="unit">
                 <div className="field name">
                   <div className="check">
@@ -41,7 +63,7 @@ class ContactItem extends React.Component {
                   <div>
                     <img src={imageURL} alt="image" className="avatar"/>{name}
                   </div>
-                  <div className={styleLables} onClick={changeLable}>{lables}</div>
+                  <div className={styleLables} onClick={this.changeLable}>{lables}</div>
                 </div>
                 <div className="field phone">
                   {phone}
