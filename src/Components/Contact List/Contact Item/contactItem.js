@@ -1,42 +1,27 @@
 import { render } from '@testing-library/react';
 import React, { Fragment } from 'react'
 
-
-
 class ContactItem extends React.Component {
     constructor(props) {
         super(props)
         this.state= {
+          id: this.props.id,
           name: this.props.name,
           lables: this.props.lables,
           phone: this.props.phone,
           email: this.props.email,
           avatar: this.props.avatar,
-          allLables: ['Work', 'Family', 'Private', 'Friends'] 
+          List: this.props.List
         }
-        this.changeLable = this.changeLable.bind(this)
+        this.updata = this.updata.bind(this)
     }
-    changeLable (event) {
-      for(let e in this.state.allLables){
-        if(this.state.allLables[e]===event.target.outerText){
-          let num = Number(e)
-          if(num==3){
-            num=-1
-          }
-          num=num+1
-          this.setState({
-            lables: this.state.allLables[num]
-          })
-          
-        }
-      }
+    updata () {
+      this.setState({lables: this.props.lables})
     }
+    
     render() {
-
-        const {name, lables, phone, email, avatar, allLables} = this.state;
-        
+      let {name, lables, phone, email, avatar, id} = this.state;
         const imageURL = `https://bootdey.com/img/Content/avatar/avatar${avatar}.png`
-
         let styleLables = 'lab'
         if(lables === 'Work') {
           styleLables = 'lab lab-success'
@@ -47,8 +32,6 @@ class ContactItem extends React.Component {
         } else if(lables === 'Friends') {
           styleLables = 'lab lab-warning'
         }
-
-       
 
         return(
             <Fragment >
@@ -63,7 +46,8 @@ class ContactItem extends React.Component {
                   <div>
                     <img src={imageURL} alt="image" className="avatar"/>{name}
                   </div>
-                  <div className={styleLables} onClick={this.changeLable}>{lables}</div>
+                  <div className={styleLables} onClick={(event) => {this.props.changeLable(event, this.props.List, this.updata)}}>{lables} <input type='hidden' value={id}/></div>
+                  
                 </div>
                 <div className="field phone">
                   {phone}
