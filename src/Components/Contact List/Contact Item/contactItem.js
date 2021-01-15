@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react';
 import React, { Fragment } from 'react'
+import { BrowserRouter as Router, Link,  Route, Switch} from 'react-router-dom'
+
+
 
 class ContactItem extends React.Component {
     constructor(props) {
@@ -13,16 +16,12 @@ class ContactItem extends React.Component {
           avatar: this.props.avatar,
           List: this.props.List
         }
-        this.updata = this.updata.bind(this)
-    }
-    updata () {
-      this.setState({lables: this.props.lables})
     }
     
     render() {
-      let {name, phone, email, avatar, id} = this.state;
+      let {name, phone, email, avatar, id} = this.props;
       const { lables } = this.props
-      const { onLableChange } = this.props 
+      const { onLableChange, onDelete, onDetailInfo } = this.props 
       
         const imageURL = `https://bootdey.com/img/Content/avatar/avatar${avatar}.png`
         let styleLables = 'lab'
@@ -37,7 +36,7 @@ class ContactItem extends React.Component {
         }
 
         return(
-            <Fragment >
+              <Fragment >
               <div className="unit">
                 <div className="field name">
                   <div className="check">
@@ -49,7 +48,7 @@ class ContactItem extends React.Component {
                   <div>
                     <img src={imageURL} alt="image" className="avatar"/>{name}
                   </div>
-                  <div className={styleLables} onClick={onLableChange}>{lables} <input type='hidden' value={id}/></div>
+                  <div className={styleLables} onClick={onLableChange}>{lables}</div>
                   
                 </div>
                 <div className="field phone">
@@ -58,9 +57,15 @@ class ContactItem extends React.Component {
                 <div className="field email">
                   {email}
                 </div>
+                <div className='btn-group btn-group-unit'>
+                  <Link className="btn-danger" onClick={onDelete}>Delete</Link>
+                  <Link to="/info" className="btn-default" onClick={onDetailInfo}>Info</Link>
+                  <Link className="btn-warning">Edit</Link>
+                </div>
               </div>
+             
+              </Fragment> 
               
-              </Fragment>      
         )
     }
 }

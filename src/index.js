@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import {v4 as uuidv4} from 'uuid'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import './index.css'
 import ContactList from './Components/Contact List/contactList'
 import NotFound from './Components/Not found/notFound'
+import Sidebar from './Components/Contact List/Sidebar/sidebar'
+import ContactInfo from './Components/Contact List/Contact Info/contactInfo'
+import AddContact from './Components/Add Contact/addContact'
 
 
 class App extends React.Component {
@@ -54,6 +57,12 @@ class App extends React.Component {
         avatar: '6'
         },
       ],
+      ContactDetail: [{name: '',
+    phone: '',
+    email: '',
+    avatar: '',
+    lables: ''
+    }]
   }
 
   onLableChange = (id) => {
@@ -73,22 +82,71 @@ class App extends React.Component {
         newList[index].lables = 'Work'
         break
     }
-    this.setState({Lise: newList})
+    this.setState({List: newList})
   }
 
-  render() {
+  onDelete = (id) => {
+    const tmpList = [...this.state.List].filter((elem) => elem.id !== id)
+    this.setState({
+      List: tmpList
+    })
+    }
+
+    onDetailInfo = (id) => {
+      const index = this.state.List.findIndex((element) => element.id === id)
+      const tmpList = this.state.List[index]
+      this.setState({ContactDetail: tmpList})
+      console.log(this.state.ContactDetail)
+      console.log(tmpList)
+    }
+
+    onCreate = (name, phone, email, lables, avatar) => {
+      let newContact = {
+        id: uuidv4(),
+        name: name,
+        phone: phone,
+        email: email,
+        lables: lables,
+        avatar: avatar
+      }
+
+      const newList = [...this.state.List, newContact]
+      this.setState(() => {
+        return{List: newList}
+      })
+    }
+    render() {
+    console.log(this.state.List);
+  
     return (
+      <div className="container bootstrap snippets bootdeys bootdey">
+      <div className="row decor-default"> 
+      <Sidebar></Sidebar>
       <Router>
-        <Switch>
+        <Switch> 
           <Route path="/"
           exact
-          render={() =>  <ContactList List={this.state.List}
+          render={() =>   
+          <ContactList List={this.state.List}
           onLableChange={this.onLableChange}
+          onDelete={this.onDelete}
+          onDetailInfo={this.onDetailInfo}
           ></ContactList>}
           />
+          <Route
+            path="/info"
+              exact
+              render={() => <ContactInfo List={this.state.List}
+              ContactDetail={this.state.ContactDetail}
+              ></ContactInfo>}/>
+              <Route path="/add-contact"
+              exact
+              render={() => <AddContact onCreate={this.onCreate}/>}
+              />
           <Route component={NotFound} />
         </Switch>
         </Router>
+        </div></div>
     )
   }
 }
