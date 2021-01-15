@@ -11,7 +11,8 @@ class ContactList extends React.Component  {
       List: this.props.List,
       onLableChange: this.props.onLableChange,
       onDelete: this.props.onDelete,
-      onDetailInfo: this.props.onDetailInfo
+      onDetailInfo: this.props.onDetailInfo,
+      onEdit: this.props.onEdit
     }
   }
 
@@ -28,6 +29,7 @@ class ContactList extends React.Component  {
         onLableChange={() => {this.state.onLableChange(user.id)}}
         onDelete={() => {this.props.onDelete(user.id)}}
         onDetailInfo={() => {this.props.onDetailInfo(user.id, user.name, user.lables, user.phone, user.email, user.avatar)}}
+        onEdit={() => {this.props.onEdit(user.id)}}
        />
      )
     })

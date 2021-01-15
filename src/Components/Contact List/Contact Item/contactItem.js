@@ -60,7 +60,7 @@ class ContactItem extends React.Component {
                 <div className='btn-group btn-group-unit'>
                   <Link className="btn-danger" onClick={onDelete}>Delete</Link>
                   <Link to="/info" className="btn-default" onClick={onDetailInfo}>Info</Link>
-                  <Link className="btn-warning">Edit</Link>
+                  <Link to="/edit-contact" className="btn-warning" onClick={this.props.onEdit}>Edit</Link>
                 </div>
               </div>
              
