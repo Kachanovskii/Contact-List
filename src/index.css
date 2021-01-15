@@ -297,3 +297,26 @@ input {
 .list-empty{
     padding-left: 20px;
 }
+
+.btn-head{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-add{
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50px;
+    height: 30px;
+}
+.btn-add:hover{
+    text-decoration: none;
+}
+
+.lab:hover{
+    cursor: pointer;
+}

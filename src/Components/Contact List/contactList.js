@@ -1,13 +1,13 @@
 import React from 'react'
 import ContactItem from './Contact Item/contactItem'
+import { Link } from 'react-router-dom'
 
 class ContactList extends React.Component  {
   constructor(props) {
     super(props)
     this.state = {
       List: this.props.List,
-      changeLable: this.props.changeLable, 
-      allLables: this.props.allLables
+      onLableChange: this.props.onLableChange
     }
   }
 
@@ -21,9 +21,7 @@ class ContactList extends React.Component  {
         phone={user.phone}
         email={user.email}
         avatar={user.avatar}
-        changeLable={this.state.changeLable}
-        allLables={this.state.allLables }
-        List={this.props.List}
+        onLableChange={() => {this.state.onLableChange(user.id)}}
        />
      )
     })
@@ -60,6 +58,9 @@ class ContactList extends React.Component  {
             <form className="ac-custom ac-checkbox ac-checkmark" autoComplete="off">
               <div className="input-group">
                 <input type="text" className="contacts-list-search" placeholder="Search"/>
+              </div>
+              <div className="btn-head">
+                <Link to="/add-new-contact" className="btn-add btn-primary">+</Link>
               </div>
               <div className="unit head">
                 <div className="field name">

@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import {v4 as uuidv4} from 'uuid'
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './index.css'
 import ContactList from './Components/Contact List/contactList'
+import NotFound from './Components/Not found/notFound'
 
 
 class App extends React.Component {
@@ -52,38 +54,41 @@ class App extends React.Component {
         avatar: '6'
         },
       ],
-      allLables: ['Work', 'Family', 'Private', 'Friends'] 
   }
 
-  changeLable = (event, value, fn) => {
-    for(let element in value){
-      if(event.target.children[0].value===value[element].id){        
-        let num = this.state.allLables.indexOf(value[element].lables)
-        if(num == 3) {
-          num = -1
-        }
-        num = num + 1
-        let newLables = this.state.allLables[num]
-        async function func() {
-          value[element].lables = newLables
-        }
-        this.setState({List: value}) 
-        func().then(()=>{
-          fn()
-        })
-        }
-      }
-      console.log(this.state.List)
+  onLableChange = (id) => {
+    const index = this.state.List.findIndex((element) => element.id === id)
+    const newList = this.state.List.slice()
+    switch (newList[index].lables) {
+      case 'Work':
+      newList[index].lables = 'Family'
+      break
+      case 'Family':
+      newList[index].lables = 'Private'
+      break
+      case 'Private':
+      newList[index].lables = 'Friends'
+      break
+      case 'Friends':
+        newList[index].lables = 'Work'
+        break
+    }
+    this.setState({Lise: newList})
   }
 
   render() {
     return (
-      <div>
-        <ContactList List={this.state.List}
-        changeLable={this.changeLable}
-        allLables={this.state.allLables}
-        ></ContactList>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/"
+          exact
+          render={() =>  <ContactList List={this.state.List}
+          onLableChange={this.onLableChange}
+          ></ContactList>}
+          />
+          <Route component={NotFound} />
+        </Switch>
+        </Router>
     )
   }
 }

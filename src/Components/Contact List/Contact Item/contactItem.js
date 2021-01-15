@@ -20,7 +20,10 @@ class ContactItem extends React.Component {
     }
     
     render() {
-      let {name, lables, phone, email, avatar, id} = this.state;
+      let {name, phone, email, avatar, id} = this.state;
+      const { lables } = this.props
+      const { onLableChange } = this.props 
+      
         const imageURL = `https://bootdey.com/img/Content/avatar/avatar${avatar}.png`
         let styleLables = 'lab'
         if(lables === 'Work') {
@@ -46,7 +49,7 @@ class ContactItem extends React.Component {
                   <div>
                     <img src={imageURL} alt="image" className="avatar"/>{name}
                   </div>
-                  <div className={styleLables} onClick={(event) => {this.props.changeLable(event, this.props.List, this.updata)}}>{lables} <input type='hidden' value={id}/></div>
+                  <div className={styleLables} onClick={onLableChange}>{lables} <input type='hidden' value={id}/></div>
                   
                 </div>
                 <div className="field phone">
