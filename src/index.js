@@ -12,51 +12,11 @@ import EditContact from './Components/Edit contact/editContact'
 
 
 class App extends React.Component {
+  dbURL = 'https://contact-list-b9bfa-default-rtdb.firebaseio.com/contacts.json'
   state = { 
     props:this.props,
     List: [
-      {id:uuidv4(),
-        name:  'Alexander Verdnam',
-        lables: 'Friends',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '1'
-        },
-        {id:uuidv4(),
-        name:  'Gerard Butler',
-        lables: 'Work',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '2'
-        },
-        {id:uuidv4(),
-        name:  'Anna Lee',
-        lables: 'Private',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '3'
-        },
-        {id:uuidv4(),
-        name:  ' Alexander Verdnam',
-        lables: 'Family',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '4'
-        },
-        {id:uuidv4(),
-        name:  'Olga Verdnam',
-        lables: 'Family',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '5'
-        },
-        {id:uuidv4(),
-        name:  'John Verdnam',
-        lables: 'Private',
-        phone: '+1-800-600-9898',
-        email: 'example@gmail.com',
-        avatar: '6'
-        },
+    
       ],
       ContactDetail: [{name: '',
     phone: '',
@@ -67,6 +27,36 @@ class App extends React.Component {
     currentContact: ''
   }
 
+  componentDidMount() {
+    this.updataData()
+  }
+
+  updataData() {
+    fetch(this.dbURL)
+    .then((responce) => {
+      return responce.json()
+    })
+    .then((data) => {
+      if(data==null){
+        this.setState({List: []})
+      } else {
+        this.setState({
+          List: data
+        })
+      }
+    }).catch((err) => {console.log(err)})
+  }
+
+  onSaveData(List) {
+    fetch(this.dbURL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(List)
+    })
+  }
+  
   onLableChange = (id) => {
     const index = this.state.List.findIndex((element) => element.id === id)
     const newList = this.state.List.slice()
@@ -84,11 +74,15 @@ class App extends React.Component {
         newList[index].lables = 'Work'
         break
     }
+
+    this.onSaveData(newList)
     this.setState({List: newList})
   }
 
   onDelete = (id) => {
     const tmpList = [...this.state.List].filter((elem) => elem.id !== id)
+
+    this.onSaveData(tmpList)
     this.setState({
       List: tmpList
     })
@@ -113,6 +107,8 @@ class App extends React.Component {
       }
 
       const newList = [...this.state.List, newContact]
+
+      this.onSaveData(newList)
       this.setState(() => {
         return{List: newList}
       })
@@ -143,10 +139,13 @@ class App extends React.Component {
 
       const newList = [...partOne, newContact, ...partTwo]
 
+      
+      this.onSaveData(newList)
       this.setState({
         List: newList
       })
     }
+
     render() {
     console.log(this.state.List);
   
