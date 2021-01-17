@@ -8,16 +8,53 @@ class ContactList extends React.Component  {
   constructor(props) {
     super(props)
     this.state = {
-      List: this.props.List,
+      List: [],
       onLableChange: this.props.onLableChange,
       onDelete: this.props.onDelete,
       onDetailInfo: this.props.onDetailInfo,
-      onEdit: this.props.onEdit
+      onEdit: this.props.onEdit,
+      updataData: this.props.updataData,
+      upadteList: this.props.upadteList
     }
   }
 
+  componentDidMount() {
+    this.state.upadteList() 
+    setTimeout(()=>console.log(this.setState({
+      List: this.props.List
+    })), 500)
+  }
+
+
+  onSearch = (e) =>  {
+    let newList = []
+    let copyList = this.props.List.slice()
+    let tmpList = this.props.List
+    this.setState({
+      List:copyList
+    })
+
+    copyList.forEach((elem) => {
+      if(e.target.value !== '' && elem.name.indexOf(`${e.target.value}`) !== -1){
+        newList.push(elem)
+        this.setState({
+          List: newList
+        })
+      } else if (e.target.value == '') {
+        this.setState({
+          List: tmpList
+        })
+      } else {
+        this.setState({
+          List: newList
+        })
+      }
+    })
+    newList=[]
+  }
+
   render() {
-    let user = this.props.List.map((user) => {
+    let user = this.state.List.map((user) => {
      return(
        <ContactItem 
         id={user.id}
@@ -34,13 +71,14 @@ class ContactList extends React.Component  {
      )
     })
 
+    console.log(this.state.List)
     return (
           <div className="col-lg-9 col-md-8 col-sm-12">
           <div className="contacts-list">
             <h5 className="title">Contact List</h5>
             <form className="ac-custom ac-checkbox ac-checkmark" autoComplete="off">
               <div className="input-group">
-                <input type="text" className="contacts-list-search" placeholder="Search"/>
+                <input type="text" className="contacts-list-search" placeholder="Search" onChange={this.onSearch}/>
               </div>
               <div className="btn-head">
                 <Link to="/add-contact" className="btn-add btn-primary">+</Link>

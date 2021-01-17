@@ -16,7 +16,7 @@ class App extends React.Component {
   state = { 
     props:this.props,
     List: [
-    
+
       ],
       ContactDetail: [{name: '',
     phone: '',
@@ -24,12 +24,23 @@ class App extends React.Component {
     avatar: '',
     lables: ''
     }],
-    currentContact: ''
+    currentContact: '',
+    filterText: '',
   }
+
+  upadteList = () => {
+    const newList = this.state.List.slice()
+    console.log(this.state)
+    this.setState({
+      List: newList
+    })
+  }
+
 
   componentDidMount() {
     this.updataData()
   }
+
 
   updataData() {
     fetch(this.dbURL)
@@ -163,6 +174,8 @@ class App extends React.Component {
           onDelete={this.onDelete}
           onDetailInfo={this.onDetailInfo}
           onEdit={this.onEdit}
+          updataData={this.updataData}
+          upadteList={this.upadteList}
           ></ContactList>}
           />
           <Route
